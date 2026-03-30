@@ -1,0 +1,172 @@
+#include <iostream>
+using namespace std;
+
+class ArrayUtility {
+public:
+    static int findMax(int A[], int i, int j);
+    static int findMaxPos(int A[], int i, int j);
+    static int findMin(int A[], int i, int j);
+    static int findMinPos(int A[], int i, int j);
+    static void swap(int A[], int i, int j);
+    static void shiftRight(int A[], int i, int j);
+    static void shiftLeft(int A[], int i, int j);
+};
+
+int main() {
+    const int SIZE = 7;
+    int myArray[SIZE] = {15, 42, 8, 99, 23, 4, 16};
+
+    cout << "--- Testing ArrayUtility Class ---\n\n";
+    
+    cout << "Original Array: ";
+    for (int k = 0; k < SIZE; k++) {
+        cout << myArray[k] << " ";
+    }
+    cout << "\n\n";
+
+    // Test findMax and findMaxPos
+    cout << "Testing findMax and findMaxPos (between index 1 and 5):\n";
+    cout << "Maximum Value: " << ArrayUtility::findMax(myArray, 1, 5) << "\n";
+    cout << "Position of Max: " << ArrayUtility::findMaxPos(myArray, 1, 5) << "\n\n";
+
+    // Test findMin and findMinPos
+    cout << "Testing findMin and findMinPos (between index 1 and 5):\n";
+    cout << "Minimum Value: " << ArrayUtility::findMin(myArray, 1, 5) << "\n";
+    cout << "Position of Min: " << ArrayUtility::findMinPos(myArray, 1, 5) << "\n\n";
+
+    // Test swap
+    cout << "Testing swap (swapping index 0 and index 6):\n";
+    ArrayUtility::swap(myArray, 0, 6);
+    cout << "Array after swap: ";
+    for (int k = 0; k < SIZE; k++) cout << myArray[k] << " ";
+    cout << "\n\n";
+
+    // Test shiftRight
+    cout << "Testing shiftRight (shifting from index 2 to 5):\n";
+    ArrayUtility::shiftRight(myArray, 2, 5);
+    cout << "Array after shiftRight: ";
+    for (int k = 0; k < SIZE; k++) cout << myArray[k] << " ";
+    cout << "\n\n";
+
+    // Test shiftLeft
+    cout << "Testing shiftLeft (shifting from index 5 down to 2):\n";
+    ArrayUtility::shiftLeft(myArray, 2, 5);
+    cout << "Array after shiftLeft: ";
+    for (int k = 0; k < SIZE; k++) cout << myArray[k] << " ";
+    cout << "\n";
+
+    return 0;
+}
+
+// FUNCTION DEFINITIONS 
+
+/*
+ * Task: Finds and returns the maximum value occurring in the array between two positions.
+ * Input Parameters: 
+ * - int A[]: The integer array to search.
+ * - int i: The starting index for the search.
+ * - int j: The ending index for the search.
+ */
+int ArrayUtility::findMax(int A[], int i, int j) {
+    int maxValue = A[i];
+    for (int k = i + 1; k <= j; k++) {
+        if (A[k] > maxValue) {
+            maxValue = A[k];
+        }
+    }
+    return maxValue;
+}
+
+/*
+ * Task: Finds and returns the index (position) of the maximum value in the array between two positions.
+ * Input Parameters: 
+ * - int A[]: The integer array to search.
+ * - int i: The starting index for the search.
+ * - int j: The ending index for the search.
+ */
+int ArrayUtility::findMaxPos(int A[], int i, int j) {
+    int maxIndex = i;
+    for (int k = i + 1; k <= j; k++) {
+        if (A[k] > A[maxIndex]) {
+            maxIndex = k;
+        }
+    }
+    return maxIndex;
+}
+
+/*
+ * Task: Finds and returns the minimum value occurring in the array between two positions.
+ * Input Parameters: 
+ * - int A[]: The integer array to search.
+ * - int i: The starting index for the search.
+ * - int j: The ending index for the search.
+ */
+int ArrayUtility::findMin(int A[], int i, int j) {
+    int minValue = A[i];
+    for (int k = i + 1; k <= j; k++) {
+        if (A[k] < minValue) {
+            minValue = A[k];
+        }
+    }
+    return minValue;
+}
+
+/*
+ * Task: Finds and returns the index (position) of the minimum value in the array between two positions.
+ * Input Parameters: 
+ * - int A[]: The integer array to search.
+ * - int i: The starting index for the search.
+ * - int j: The ending index for the search.
+ */
+int ArrayUtility::findMinPos(int A[], int i, int j) {
+    int minIndex = i;
+    for (int k = i + 1; k <= j; k++) {
+        if (A[k] < A[minIndex]) {
+            minIndex = k;
+        }
+    }
+    return minIndex;
+}
+
+/*
+ * Task: Swaps the values located at two specific positions within the array.
+ * Input Parameters: 
+ * - int A[]: The integer array containing the elements.
+ * - int i: The index of the first element to swap.
+ * - int j: The index of the second element to swap.
+ */
+void ArrayUtility::swap(int A[], int i, int j) {
+    int temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
+}
+
+/*
+ * Task: Shifts to the right all elements in the array starting from position i up to position j.
+ * (Moves element in position k to position k+1 for all i <= k < j).
+ * Input Parameters: 
+ * - int A[]: The integer array to be modified.
+ * - int i: The starting index of the shift sequence.
+ * - int j: The ending boundary of the shift sequence.
+ */
+void ArrayUtility::shiftRight(int A[], int i, int j) {
+    // Loop backwards to prevent overwriting values before they are shifted
+    for (int k = j - 1; k >= i; k--) {
+        A[k + 1] = A[k];
+    }
+}
+
+/*
+ * Task: Shifts to the left all elements in the array from position j down to position i.
+ * (Moves element in position k to position k-1 for all i < k <= j).
+ * Input Parameters: 
+ * - int A[]: The integer array to be modified.
+ * - int i: The ending boundary (lowest index) of the shift sequence.
+ * - int j: The starting index (highest index) to shift left from.
+ */
+void ArrayUtility::shiftLeft(int A[], int i, int j) {
+    // Loop forwards to prevent overwriting values before they are shifted
+    for (int k = i + 1; k <= j; k++) {
+        A[k - 1] = A[k];
+    }
+}
